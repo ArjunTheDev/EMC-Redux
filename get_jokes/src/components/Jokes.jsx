@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchJokes } from '../feature/jokesSlice';
+import { fetchJokes, updateCategory } from '../feature/jokesSlice';
 import { Input } from 'antd';
 import { categoryList } from '../utility/constants';
 const { Search } = Input;
 
 const Jokes = () => {
   const dispatch = useDispatch();
-  const { jokes, status, error } = useSelector((state) => state.jokes);
+  const { categoryType, jokes, status, error } = useSelector((state) => state.jokes);
   const [category, setCategory] = useState('');
 
   if (status === 'loading') {
@@ -15,6 +15,7 @@ const Jokes = () => {
   }
 
   const handleSearch = () => {
+    dispatch(updateCategory(category));
     dispatch(fetchJokes(category));
     setCategory('');
   }
@@ -32,7 +33,7 @@ const Jokes = () => {
             />
         </div>
         <div className='text-field'>
-            {status === 'succeeded' && jokes.value}
+            {status === 'succeeded' && `Joke from ${categoryType}, ${jokes.value} 😂`  }
             {status === 'failed' && 
               <div>
                 <span className='error'>Error: {JSON.stringify(error)}</span>

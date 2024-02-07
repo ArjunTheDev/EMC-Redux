@@ -18,11 +18,16 @@ export const fetchJokes = createAsyncThunk('jokes/fetchJokes', async (category =
 const jokesSlice = createSlice({
   name: 'jokes',
   initialState: {
+    categoryType: '',
     jokes: [],
     status: 'idle',
     error: [],
   },
-  reducers: {},
+  reducers: {
+    updateCategory: (state, action) => {
+      state.categoryType = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchJokes.pending, (state) => {
         state.status = 'loading';
@@ -39,5 +44,7 @@ const jokesSlice = createSlice({
     })
   },
 });
+
+export const { updateCategory } = jokesSlice.actions;
 
 export default jokesSlice.reducer;
