@@ -33,7 +33,7 @@ const Jokes = () => {
             />
         </div>
         <div className='text-field'>
-            {status === 'succeeded' && `Joke from ${categoryType}, ${jokes.value} 😂`  }
+            {status === 'succeeded' && `Joke from ${categoryType || 'Random Category'}, ${jokes.value} 😂`  }
             {status === 'failed' && 
               <div>
                 <span className='error'>Error: {JSON.stringify(error)}</span>
